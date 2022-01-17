@@ -1,0 +1,57 @@
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class House : MonoBehaviour, IPointerClickHandler
+{
+    [SerializeField] private GameObject _securitySystemObj;
+
+    private SecuritySystem _securitySystem;
+    private Vector2 _instalTransform;
+    private bool _isInstalled = false;
+    private bool _thiefInHouse = false;
+
+    private void Start()
+    {
+        _securitySystem = _securitySystemObj.GetComponent<SecuritySystem>();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (!_isInstalled)
+        {
+            _instalTransform = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            _securitySystemObj.transform.position = _instalTransform;
+            _securitySystemObj.SetActive(true);
+            _isInstalled = true;
+        }
+    }
+
+    private void Update()
+    {
+        if (!_thiefInHouse && _securitySystem.Alarm)
+        {
+            _securitySystem.ReductionSound();
+        }
+        if (_thiefInHouse)
+        {
+            _securitySystem.IncereaseSound();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<Thief>(out Thief thief))
+        {
+            _thiefInHouse = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<Thief>(out Thief thief))
+        {
+            _thiefInHouse = true;
+            
+        }
+    }
+}
