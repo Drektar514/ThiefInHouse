@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -5,28 +6,28 @@ public class SecuritySystem : MonoBehaviour
 {
     private AudioSource _audioSourse;
 
-    public bool Alarm { get; private set; }
-
     private void Start()
     {
         _audioSourse = GetComponent<AudioSource>();
-        Alarm = false;   
     }
 
-    public void ReductionSound()
+    public IEnumerator ReductionSound()
     {
-        _audioSourse.volume = Mathf.MoveTowards(_audioSourse.volume, 0.0f,  Time.deltaTime);
-        if (_audioSourse.volume == 0)
-            Alarm = false;
-    }
-
-    public void IncereaseSound()
-    {
-        if (!Alarm)
+        while (_audioSourse.volume != 0f)
         {
-            _audioSourse.Play();
+            _audioSourse.volume = Mathf.MoveTowards(_audioSourse.volume, 0.0f, Time.deltaTime);
+            yield return null;
         }
-        _audioSourse.volume = Mathf.MoveTowards(_audioSourse.volume, 1.0f, Time.deltaTime);
-        Alarm = true;
+
+    }
+
+    public IEnumerator IncereaseSound()
+    {
+        _audioSourse.Play();
+        while (_audioSourse.volume != 1f)
+        {
+            _audioSourse.volume = Mathf.MoveTowards(_audioSourse.volume, 1.0f, Time.deltaTime);
+            yield return null;
+        }
     }
 }
