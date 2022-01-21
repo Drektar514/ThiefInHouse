@@ -5,16 +5,15 @@ public class House : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private SecuritySystem _securitySystem;
 
-    private Vector2 _installTransform;
+    private Vector2 _installPosition;
     private bool _securityInstalled = false;
-    private bool _thiefInHouse = false;
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!_securityInstalled)
         {
-            _installTransform = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _securitySystem.gameObject.transform.position = _installTransform;
+            _installPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            _securitySystem.gameObject.transform.position = _installPosition;
             _securitySystem.gameObject.SetActive(true);
             _securityInstalled = true;
         }
@@ -25,7 +24,7 @@ public class House : MonoBehaviour, IPointerClickHandler
     {
         if (collision.TryGetComponent<Thief>(out Thief thief) && _securityInstalled)
         {
-            StartCoroutine(_securitySystem.ReductionSound());
+            StartCoroutine(_securitySystem.TurnDownTheVolume());
         }
     }
 
@@ -33,7 +32,7 @@ public class House : MonoBehaviour, IPointerClickHandler
     {
         if (collision.TryGetComponent<Thief>(out Thief thief) && _securityInstalled)
         {
-            StartCoroutine(_securitySystem.IncereaseSound()); 
+            StartCoroutine(_securitySystem.TurnUpTheVolume()); 
         }
     }
 }
