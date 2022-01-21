@@ -13,17 +13,17 @@ public class SecuritySystem : MonoBehaviour
 
     public void TurnDownVolume()
     {
-        StopCoroutine(TurnUpTheVolume());
-        StartCoroutine(TurnDownTheVolume());
+        StopCoroutine(TurnUpTheVolumeCorutine());
+        StartCoroutine(TurnDownTheVolumeCorutine());
     }
 
     public void TurnUpVolume()
     {
-        StopCoroutine(TurnDownTheVolume());
-        StartCoroutine(TurnUpTheVolume());
+        StopCoroutine(TurnDownTheVolumeCorutine());
+        StartCoroutine(TurnUpTheVolumeCorutine());
     }
 
-    private IEnumerator TurnDownTheVolume()
+    private IEnumerator TurnDownTheVolumeCorutine()
     {
         while (_audioSourse.volume != 0f)
         {
@@ -33,7 +33,7 @@ public class SecuritySystem : MonoBehaviour
 
     }
 
-    private IEnumerator TurnUpTheVolume()
+    private IEnumerator TurnUpTheVolumeCorutine()
     {
         _audioSourse.Play();
         while (_audioSourse.volume != 1f)
