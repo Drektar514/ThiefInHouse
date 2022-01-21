@@ -11,7 +11,7 @@ public class SecuritySystem : MonoBehaviour
         _audioSourse = GetComponent<AudioSource>();
     }
 
-    public IEnumerator ReductionSound()
+    public IEnumerator TurnDownTheVolume()
     {
         while (_audioSourse.volume != 0f)
         {
@@ -21,7 +21,7 @@ public class SecuritySystem : MonoBehaviour
 
     }
 
-    public IEnumerator IncereaseSound()
+    public IEnumerator TurnUpTheVolume()
     {
         _audioSourse.Play();
         while (_audioSourse.volume != 1f)
