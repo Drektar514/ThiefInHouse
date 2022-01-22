@@ -1,4 +1,4 @@
-using UnityEngine;
+uusing UnityEngine;
 
 public class Thief : MonoBehaviour
 {
@@ -6,22 +6,21 @@ public class Thief : MonoBehaviour
     [SerializeField] private Transform _leftPatrolPoint;
     [SerializeField] private float _speed;
 
-     private bool _goRight = true;
+    private bool _goRight = true;
 
     private void Update()
     {
         if (_goRight)
         {
             transform.position = Vector3.MoveTowards(transform.position, _rightPatrolPoint.position, _speed * Time.deltaTime);
-            if(transform.position.x == _rightPatrolPoint.position.x)
-                _goRight = false; 
+            if (transform.position.x == _rightPatrolPoint.position.x)
+                _goRight = false;
         }
-        
-        if (!_goRight)
+        else
         {
             transform.position = Vector3.MoveTowards(transform.position, _leftPatrolPoint.position, _speed * Time.deltaTime);
             if (transform.position.x == _leftPatrolPoint.position.x)
-                _goRight = true;  
+                _goRight = true;
         }
     }
 }
