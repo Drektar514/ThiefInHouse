@@ -31,7 +31,7 @@ public class House : MonoBehaviour, IPointerClickHandler
     {
         if (collision.TryGetComponent<Thief>(out Thief thief) && _securityInstalled)
         {
-            _securitySystem.TurnUpVolume(); 
+            _securitySystem.TurnUpVolume();
         }
     }
 }
