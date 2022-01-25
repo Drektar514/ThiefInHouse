@@ -5,22 +5,24 @@ using UnityEngine;
 public class SecuritySystem : MonoBehaviour
 {
     private AudioSource _audioSourse;
+    private Coroutine _volumeChanger;
 
     private void Start()
     {
         _audioSourse = GetComponent<AudioSource>();
+        _volumeChanger = StartCoroutine(TurnUpTheVolumeCorutine());
     }
 
     public void TurnDownVolume()
     {
-        StopCoroutine(TurnUpTheVolumeCorutine());
-        StartCoroutine(TurnDownTheVolumeCorutine());
+        StopCoroutine(_volumeChanger);
+        _volumeChanger = StartCoroutine(TurnDownTheVolumeCorutine());
     }
 
     public void TurnUpVolume()
     {
-        StopCoroutine(TurnDownTheVolumeCorutine());
-        StartCoroutine(TurnUpTheVolumeCorutine());
+        StopCoroutine(_volumeChanger);
+        _volumeChanger = StartCoroutine(TurnUpTheVolumeCorutine());
     }
 
     private IEnumerator TurnDownTheVolumeCorutine()
